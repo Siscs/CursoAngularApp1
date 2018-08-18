@@ -1,3 +1,10 @@
-<img [src]="coracaoCheioImg" [alt]="coracaoCheio" [title]="coracaoCheio" />
-<img [src]="coracaoCheioImg" [alt]="coracaoCheio" [title]="coracaoCheio" />
-<img [src]="coracaoVazioImg" [alt]="coracaoVazio" [title]="coracaoVazio" />
+<!-- 
+    <img [src]="tipoCoracaoImg" [alt]="coracaoCheio" [title]="coracaoCheio" />
+    <img [src]="tipoCoracaoImg" [alt]="coracaoCheio" [title]="coracaoCheio" />
+    <img [src]="tipoCoracaoImg" [alt]="coracaoVazio" [title]="coracaoVazio" />
+-->
+
+<img *ngFor="let coracao of coracoes" 
+    [src]="coracao.exibeCoracao()" 
+    [alt]="coracao.mensagemCoracao()" 
+    [title]="coracao.mensagemCoracao()">

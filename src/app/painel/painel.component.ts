@@ -11,14 +11,15 @@ export class PainelComponent implements OnInit {
 
   public frases: Frase[] = FRASES;
   public instrucao: string = 'Traduza esta frase:'
-  public resposta:string;
+  public resposta:string = '';
   public rodada: number = 0;
   public rodadaFrase: Frase;
   public progresso: number = 0;
+  public tentativas: number = 3; 
 
   constructor() { 
-    //console.log(this.frases);
     this.montarFrase();
+    this.tentativas = 3;
   }
 
   ngOnInit() {
@@ -26,17 +27,14 @@ export class PainelComponent implements OnInit {
 
   montarFrase(): void {
       this.rodadaFrase = this.frases[this.rodada];
+      this.progresso += ( 100 / this.frases.length)
   }
 
   atualizarResposta(evento: Event): void {
-    
     this.resposta = (<HTMLInputElement>evento.target).value;
-    this.progresso = ( 100 / this.frases.length)
-    //    console.log(this.resposta);
   }
 
   verificarResposta(): void {
-    console.log('resposta ' + this.resposta);
 
     if(this.resposta.toLowerCase() === this.rodadaFrase.frasePtBr.toLowerCase()) {
       
@@ -47,18 +45,34 @@ export class PainelComponent implements OnInit {
       let maximoDeRodadas: number = this.frases.length;
 
       if ( maximoDeRodadas <= this.rodada ) {
-        this.rodada = 0;
+        alert('parabéns voce acertou tudo!!!');
+        this.iniciarNovamente();
+        return;
       }
+      
+      this.resposta = '';
 
       this.montarFrase();
 
     } else {
-      this.resposta = '';
+
+      this.tentativas--;
+
       alert('A tradução esta errada!');
+
+      if( this.tentativas === 0 ) {
+        alert('Tentativas esgotadas. comece de novo!!!');
+        this.iniciarNovamente();
+      }
     }
-
-
   }
 
+  iniciarNovamente(): void {
+    this.rodada = 0;
+    this.progresso = 0;
+    this.tentativas = 3;
+    this.resposta = '';
+    this.montarFrase();
+  }
 
 }
