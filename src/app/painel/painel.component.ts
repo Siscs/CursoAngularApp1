@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { Frase } from '../shared/frase.model';
 import { FRASES } from './frases-mock';
 
@@ -7,7 +7,7 @@ import { FRASES } from './frases-mock';
   templateUrl: './painel.component.html',
   styleUrls: ['./painel.component.css']
 })
-export class PainelComponent implements OnInit {
+export class PainelComponent implements OnInit, OnDestroy {
 
   public frases: Frase[] = FRASES;
   public instrucao: string = 'Traduza esta frase:'
@@ -16,6 +16,7 @@ export class PainelComponent implements OnInit {
   public rodadaFrase: Frase;
   public progresso: number = 0;
   public tentativas: number = 3; 
+  @Output() public encerrarJogo = new EventEmitter();
 
   constructor() { 
     this.montarFrase();
@@ -23,6 +24,10 @@ export class PainelComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    console.log('Componente painel destruído.');
   }
 
   montarFrase(): void {
@@ -45,14 +50,17 @@ export class PainelComponent implements OnInit {
       let maximoDeRodadas: number = this.frases.length;
 
       if ( maximoDeRodadas <= this.rodada ) {
-        alert('parabéns voce acertou tudo!!!');
-        this.iniciarNovamente();
-        return;
-      }
-      
-      this.resposta = '';
+        //alert('parabéns voce acertou tudo!!!');
+        //this.iniciarNovamente();
 
-      this.montarFrase();
+        // executa o evento no componente pai (app)
+        this.encerrarJogo.emit('vitoria');
+
+      } else {
+        // atualiza 
+        this.resposta = '';
+        this.montarFrase();
+      }
 
     } else {
 
@@ -61,8 +69,12 @@ export class PainelComponent implements OnInit {
       alert('A tradução esta errada!');
 
       if( this.tentativas === 0 ) {
-        alert('Tentativas esgotadas. comece de novo!!!');
-        this.iniciarNovamente();
+        //alert('Tentativas esgotadas. comece de novo!!!');
+        //this.iniciarNovamente();
+
+        // executa o evento no componente pai (app)
+        this.encerrarJogo.emit('derrota');
+
       }
     }
   }

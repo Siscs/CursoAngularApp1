@@ -22,9 +22,6 @@ export class TentativasComponent implements OnInit, OnChanges {
   
   ngOnChanges() {
 
-    
-    console.log('tentativas: ' + this.tentativas);
-    
     this.coracoes = [new Coracao(false), new Coracao(false), new Coracao(false)];
 
     if(this.tentativas > 0) {
@@ -32,9 +29,6 @@ export class TentativasComponent implements OnInit, OnChanges {
         this.coracoes[count].cheio = true;
       }
     }
-    
-
-    console.log(this.coracoes);
     
   }
 
