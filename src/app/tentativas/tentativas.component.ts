@@ -9,8 +9,8 @@ import { Coracao } from '../shared/coracao.model';
 export class TentativasComponent implements OnInit, OnChanges {
 
   public tipoCoracaoImg: string;
-  public coracaoCheioImg: string = '/assets/coracao_cheio.png';
-  public coracaoVazioImg: string = '/assets/coracao_vazio.png';
+  // public coracaoCheioImg: string = '/assets/coracao_cheio.png';
+  // public coracaoVazioImg: string = '/assets/coracao_vazio.png';
 
   @Input() public tentativas: number;
   

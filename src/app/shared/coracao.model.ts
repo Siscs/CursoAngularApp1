@@ -5,8 +5,8 @@ export class Coracao {
 
     constructor(
         public cheio: boolean,
-        public urlCoracaoCheio: string = '/src/assets/coracao_cheio.png',
-        public urlCoracaoVazio: string = '/src/assets/coracao_vazio.png'
+        public urlCoracaoCheio: string = '/assets/coracao_cheio.png',
+        public urlCoracaoVazio: string = '/assets/coracao_vazio.png'
     ) {}
 
     public exibeCoracao(): string {
